@@ -8,15 +8,29 @@
 
 include ('./db.php');
 
-$scope = "users";
-
 function getByID($id) {
-	echo $id;
+	if (!$id) errorThrower(104);
 	if ($stmt = mysqli_prepare(getInstance("users_read"), 'SELECT * FROM users WHERE id=?')) {
 		mysqli_stmt_bind_param($stmt, "i", $id);
-		mysqli_stmt_execute($stmt);
-		mysqli_stmt_bind_result($stmt, $id, $login, $firstname, $middlename, $lastname, $email, $phone, $password, $balance, $role, $bdate, $regdate);
-		mysqli_stmt_fetch($stmt);
-		// for
+		$data = resultHelper($stmt);
+		(count($data) > 0) ? responseThrower(resultHelper($stmt)) : errorThrower(106);
+	} else {
+		errorThrower(105);
+	}
+}
+
+function register($data) {
+	if (!isset($data["firstname"]) || !isset($data["middlename"]) || !isset($data["lastname"]) ||
+		 !isset($data["phone"]) || !isset($data["password"]) || !isset($data["role"])) errorThrower(107);
+
+	if ($stmt = mysqli_prepare(getInstance("users_read"), 'SELECT `phone` FROM users WHERE email=?')) {
+		mysqli_stmt_bind_param($stmt, "s", $data["phone"]);
+		$result = resultHelper($stmt);
+		foreach ($result as $user) {
+			if ($user["phone"] == $data["phone"]) errorThrower(108);
+		}
+		//(count($data) > 0) ? responseThrower(resultHelper($stmt)) : errorThrower(106);
+	} else {
+		errorThrower(105);
 	}
 }

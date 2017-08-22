@@ -29,3 +29,9 @@ function getInstance($scope) {
 		return $mConnection;
 	}
 }
+
+function resultHelper($stmt) {
+	mysqli_stmt_execute($stmt);
+	$res = mysqli_stmt_get_result($stmt);
+	return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
