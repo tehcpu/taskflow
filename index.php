@@ -27,7 +27,7 @@
                 document.getElementById("demo").innerHTML = this.responseText;
             }
         };
-        xhttp.open("GET", "http://taskflow.net/method/qwewqe", true);
+        xhttp.open("GET", "http://taskflow.net/method/accounts.login?login=package&password=123qwe", true);
         xhttp.send();
     }
 </script>

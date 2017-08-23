@@ -6,8 +6,7 @@
  * Time: 6:56 PM
  */
 
-include ('config.php');
-include ('utils.php');
+include_once ('config.php');
 
 $Instances = array();
 
@@ -33,5 +32,6 @@ function getInstance($scope) {
 function resultHelper($stmt) {
 	mysqli_stmt_execute($stmt);
 	$res = mysqli_stmt_get_result($stmt);
+	if (is_bool($res)) return $res;
 	return mysqli_fetch_all($res, MYSQLI_ASSOC);
 }
