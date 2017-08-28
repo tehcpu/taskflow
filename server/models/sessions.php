@@ -6,6 +6,8 @@
  * Time: 6:55 PM
  */
 
+$_USER["id"] = null;
+
 function createSession($uid) {
 	if ($stmt = mysqli_prepare(getInstance("sessions_write"), 'INSERT INTO sessions (user_id, user_ip, hash, created_at, expired_at) VALUES (?, ?, ?, ?, ?)')) {
 		$created_at = time();
@@ -43,6 +45,7 @@ function deactivateSession($session) {
 }
 
 function validateSession($session) {
+	global $_USER;
 	$parts = explode(".", $session);
 	if (count($parts) != 2) errorThrower(115);
 	$id = $parts[0];
@@ -54,6 +57,7 @@ function validateSession($session) {
 		if ($hash != $data[0]["hash"]) errorThrower(115);
 		if (time() > $data[0]["expired_at"]) errorThrower(117);
 		if ($data[0]["deactivated_at"] > 0) errorThrower(118);
+		$_USER["id"] = $data[0]["user_id"];
 		return true;
 	} else {
 		errorThrower(105);

@@ -31,6 +31,18 @@ $_CONFIG["DB"] = array(
 		"password" => "0C}^kqo^uBz10nw$",
 		"name" => "taskflow"
 	),
+	"tasks_write" => array(
+		"host" => "127.0.0.1",
+		"user" => "taskuser",
+		"password" => "0C}^kqo^uBz10nw$",
+		"name" => "taskflow"
+	),
+	"tasks_read" => array(
+		"host" => "127.0.0.1",
+		"user" => "taskuser",
+		"password" => "0C}^kqo^uBz10nw$",
+		"name" => "taskflow"
+	),
 );
 
 $_CONFIG["SECURE"] = array("salt" => "uBz10nw");
@@ -41,7 +53,7 @@ $_ERRORS = array(
 	102 => "Invalid scope. Can't connect to DB. Possible reason: invalid config.",
 	103 => "Valid scope, but it's still impossible to connect to the database. Possible reason: wrong config credentials or host is down.",
 	104 => "User ID must be defined",
-	105 => "Something went wrong",
+	105 => "Something went wrong [invalid query?]",
 	106 => "Can't find users with such ID",
 	107 => "Registration failure: not all required fields are filled in",
 	108 => "This login is already in use",
@@ -56,5 +68,6 @@ $_ERRORS = array(
 	117 => "Session has expired",
 	118 => "Session has deactivated",
 	119 => "API Request error: your session is invalid. Please, login to exiting account or register new one [redirect]",
-	120 => ""
+	120 => "Logout failure",
+	121 => "Task addition failure"
 );

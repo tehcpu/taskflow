@@ -29,9 +29,37 @@ function getInstance($scope) {
 	}
 }
 
+function query($sql, $types, $params, $scope) {
+	$instance = getInstance($scope);
+	array_unshift($params, $types);
+	if ($stmt = mysqli_prepare($instance, $sql)) {
+		call_user_func_array(array($stmt, 'bind_param'), ref($params));
+		mysqli_stmt_execute($stmt);
+		return $stmt;
+	} else {
+		errorThrower(105);
+	}
+}
+
+function fetch($stmt) {
+	$result = mysqli_stmt_get_result($stmt);
+	return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
 function resultHelper($stmt) {
 	mysqli_stmt_execute($stmt);
 	$res = mysqli_stmt_get_result($stmt);
 	if (is_bool($res)) return $res;
 	return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
+
+function getLastInsertID($scope) {
+	return mysqli_insert_id(getInstance($scope));
+}
+
+function ref($arr){
+	$refs = array();
+	foreach($arr as $key => $value)
+		$refs[$key] = &$arr[$key];
+	return $refs;
 }
