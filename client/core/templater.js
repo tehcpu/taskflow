@@ -5,6 +5,8 @@
     var currentPageName = null;
     var $currentPage = null;
 
+    var lock = false;
+
     function show(pageName,param) {
         var $page = $("section#" + pageName);
         if( $page.length == 0 ) {
@@ -35,11 +37,10 @@
     }
 
     function app(pageName,param) {
-
         var $page = $(document.body).find("section#" + pageName);
-
+        console.log(pageName+" "+param)
         var src = $page.attr("src");
-        if( src && $page.find(">:first-child").length == 0) {
+        if ( src && $page.find(">:first-child").length == 0) {
             app.get(src, $page, pageName)
                 .done(function(html){$page.html(html); show(pageName,param); })
                 .fail(function(){ console.warn("failed to get %s page!",pageName);});
@@ -51,20 +52,29 @@
     app.page = function(pageName, handler) { pageHandlers[pageName] = handler; };
     app.get = function(src,$page,pageName) { return $.get(src, "html"); };
 
-    function onhashchange()
-    {
-        var hash = location.hash || ("#" + $("section[default]").attr('id'));
-
-        var re = /#([-0-9A-Za-z]+)(\:(.+))?/;
-        var match = re.exec(hash);
-        hash = match[1];
-        var param = match[3];
-        app(hash,param);
+    function router() {
+        var url = location.pathname.split('/');
+        var pageName = url[1];
+        var param = url[2];
+        app(pageName,param);
     }
 
-    $(window).on("hashchange", onhashchange );
+    $('body').on('click', 'a', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        history.pushState('data to be passed', 'Title of the page', $(this).attr("href"));
+        router()
+    });
+
+    window.onpopstate = function() {
+        lock = true;
+        router();
+        setTimeout(function () {
+            lock = false;
+        }, 100)
+    }
 
     window.app = app;
-    window.setTimeout( function() { $(onhashchange); } );
+    window.setTimeout( function() { if (!lock) $(router); } );
 
 })(jQuery,this);

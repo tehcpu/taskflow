@@ -43,6 +43,18 @@ $_CONFIG["DB"] = array(
 		"password" => "0C}^kqo^uBz10nw$",
 		"name" => "taskflow"
 	),
+	"transactions_write" => array(
+		"host" => "127.0.0.1",
+		"user" => "taskuser",
+		"password" => "0C}^kqo^uBz10nw$",
+		"name" => "taskflow"
+	),
+	"transactions_read" => array(
+		"host" => "127.0.0.1",
+		"user" => "taskuser",
+		"password" => "0C}^kqo^uBz10nw$",
+		"name" => "taskflow"
+	),
 );
 
 $_CONFIG["SECURE"] = array("salt" => "uBz10nw");
@@ -69,5 +81,7 @@ $_ERRORS = array(
 	118 => "Session has deactivated",
 	119 => "API Request error: your session is invalid. Please, login to exiting account or register new one [redirect]",
 	120 => "Logout failure",
-	121 => "Task addition failure"
+	121 => "Task addition failure",
+	122 => "You have not enough money for this operation",
+	1338 => "Task has already closed"
 );

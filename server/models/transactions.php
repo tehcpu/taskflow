@@ -6,7 +6,7 @@
  * Time: 6:55 PM
  */
 
-function _middleware() {
-	if (!isset($_COOKIE["s"]) || !validateSession($_COOKIE["s"])) errorThrower(119);
+function addTransaction($from, $to, $task_id, $sum) {
+	query("INSERT INTO transactions (from_id, to_id, task_id, `sum`, created_at) VALUES (?, ?, ?, ?, ?)", "iiiii", array($from, $to, $task_id, $sum, time()), "transactions_write");
 }
-_middleware();
+

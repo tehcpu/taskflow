@@ -15,7 +15,7 @@ function errorThrower($code) {
 }
 
 function responseThrower($data) {
-	print json_encode(array("response" => array($data)), JSON_UNESCAPED_UNICODE);
+	print json_encode(array("response" => $data), JSON_UNESCAPED_UNICODE);
 }
 
 function encodePassword($plain) {
