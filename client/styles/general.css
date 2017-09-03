@@ -11145,3 +11145,7 @@ table.transactions tr td.price {
     width: 200px;
     background-size: cover;
 }
+
+.section .body {
+    text-align: left;
+}

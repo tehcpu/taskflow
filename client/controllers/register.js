@@ -39,10 +39,6 @@ app.page("register", function() {
         }
     }
 
-
-
-    // handlers
-
     $("#registerUserButton").unbind('click').on('click', function (e) {
         e.preventDefault();
         registerUser();

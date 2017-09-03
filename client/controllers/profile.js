@@ -1,18 +1,10 @@
 app.page("profile", function() {
-    $(".top_main_menu a").removeClass("active");
-    $("#tasks_list_profile").html("");
-    $(".profile_sidebar").remove();
-    var method = "feed.user";
-    window.last_id_feed = 0;
-    $(window).unbind('scroll');
     user_id = parseInt(window.location.pathname.split("/").pop());
-
     apiRequest("profile.get", {'id': user_id}, function (response) {
-        console.log(response);
         if (response.hasOwnProperty("response")) {
             user = response.response.user[0];
-
             role = (user.role == 0) ? "Заказчик" : 'Исполнитель';
+
             data ='<div class="profile_sidebar left">' +
                     '<div class="section user_info">' +
                     '<a class="avatar" href="/profile/'+user.id+'">' +
@@ -33,6 +25,7 @@ app.page("profile", function() {
                     '</div>' +
                     '</div>' +
                     '</div>';
+
             $("#profileInfo").prepend(data);
 
             if (!user.email) $(".userEmail").remove();
@@ -41,15 +34,14 @@ app.page("profile", function() {
         } else {
             notificationCenter("Что-то пошло совсем не так :(", 'error')
         }
-    })
+    });
 
-    getFeed(method, window.last_id_feed, "tasks_list_profile", user_id);
+    getFeed("feed.user", window.list_last_id, "tasks_list_profile", user_id);
 
-    window.feedListener = $(window).scroll(function () {
+    $(window).scroll(function () {
         if (!window.lock) {
-            console.log(method);
             if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-                getFeed(method, window.last_id_feed, "tasks_list_profile", user_id);
+                getFeed("feed.user", window.list_last_id, "tasks_list_profile", user_id);
             }
         }
     });

@@ -56,5 +56,3 @@ switch ($_REQUEST["method"]) {
 		break;
     default: errorThrower(101);
 }
-
-?>

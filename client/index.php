@@ -35,7 +35,7 @@ error_reporting(E_ALL);
                     <div class="dropdown user_menu">
                         <div class="balance-wrapper">
                             <a href="/transactions">
-                                <span id="userBalance" class="balance">Баланс: <?=$user['balance']?> &#x20bd;</span>
+                                <span id="userBalance" class="balance">Баланс: <span id="balanceSum"><?=$user['balance']?></span> &#x20bd;</span>
                             </a>
                         </div>
                         <a id="userLink" href="/profile/<?=$user['id']?>">

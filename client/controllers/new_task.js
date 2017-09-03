@@ -1,8 +1,4 @@
 app.page("new_task", function() {
-    $("#startTask").unbind("click");
-    $(".top_main_menu a").removeClass("active");
-    $(".top_main_menu a[href='/new_task']").addClass("active");
-
     function start() {
         body = $("#newTaskBody").val();
         title = $("#newTaskTitle").val();
@@ -24,7 +20,7 @@ app.page("new_task", function() {
 
     }
 
-    $("#startTask").on('click', function () {
+    $("#startTask").unbind("click").on('click', function () {
         $(this).hide();
         start();
     });

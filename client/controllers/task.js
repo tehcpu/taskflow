@@ -1,17 +1,14 @@
 app.page("task", function() {
-    $(".top_main_menu a").removeClass("active");
-    $("#closeTask").unbind("click");
-    window.last_id_feed = 0;
-    $(window).unbind('scroll');
     user_id = parseInt(window.location.pathname.split("/").pop());
+    var price = 0;
     apiRequest("tasks.get", {'id': user_id}, function (response) {
         task = response.response.task[0];
         user = response.response.user[0];
 
         $("#taskDate").html(timeConverter(task.created_at));
         $("#taskPrice").html(task.budget);
+        price = task.budget;
         $("#taskBody").html(task.body);
-console.log(response.response.role)
         $("#taskUserLink").attr("href", "/profile/"+user.id);
         userAvatar = "http://www.gravatar.com/avatar/"+user.id+"?d=identicon";
         $("#taskUserAvatar").css("background-image", "url('"+userAvatar+"')");
@@ -29,6 +26,7 @@ console.log(response.response.role)
                 }, 3000);
             } else {
                 notificationCenter("Задача зарезервирована за Вами, деньги на счет получены", 'success');
+                balanceUpdater(price);
                 setTimeout(function () {
                     document.location.href = '/feed';
                 }, 3000);
@@ -37,7 +35,7 @@ console.log(response.response.role)
 
     }
 
-    $("#closeTask").on('click', function () {
+    $("#closeTask").unbind("click").on('click', function () {
         $(this).remove();
         reserve()
     });

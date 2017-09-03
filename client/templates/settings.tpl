@@ -66,11 +66,4 @@
     <div class="clear"></div>
 </div>
 
-<script>
-    app.page("settings", function() {
-        $(".top_main_menu a").removeClass("active");
-        $(".top_main_menu a[href='/settings']").addClass("active");
-    });
-</script>
-
 <script src="/controllers/settings.js"></script>

@@ -24,7 +24,7 @@ app.page("auth", function() {
     $("#authUserButton").unbind('click').on('click', function (e) {
         e.preventDefault();
         authUser();
-    })
+    });
 
     if (document.location.search == "?rs") {
         // fake notify fix

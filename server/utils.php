@@ -29,11 +29,11 @@ function checkPassword($plain, $hash) {
 }
 
 function cookieSetter($cookie_name, $cookie_value) {
-	setcookie($cookie_name, $cookie_value, time() + (86400 * 31 * 12), "/", "taskflow.net", false, true);
+	setcookie($cookie_name, $cookie_value, time() + (86400 * 31 * 12), "/", ".tehcpu.ru", false, true);
 }
 
 function cookieRemover($cookie_name) {
-	setcookie($cookie_name, null, 1, "/", "taskflow.net", false, true);
+	setcookie($cookie_name, null, 1, "/", ".tehcpu.ru", false, true);
 }
 
 function getClientIP() {

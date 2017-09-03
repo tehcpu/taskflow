@@ -34,11 +34,4 @@
     <div class="clear"></div>
 </div>
 
-<script>
-    app.page("transactions", function() {
-        $(".top_main_menu a").removeClass("active");
-        $(".top_main_menu a[href='/settings']").addClass("active");
-    });
-</script>
-
 <script src="/controllers/transactions.js"></script>

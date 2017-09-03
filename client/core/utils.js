@@ -1,5 +1,7 @@
+var baseUrl = "http://vk.tehcpu.ru";
+
 function apiRequest(method, data, callback) {
-    var apiBase = 'http://taskflow.net/method/';
+    var apiBase = baseUrl+'/method/';
     var url = apiBase+method;
     $.ajax({
         type: "POST",
@@ -16,6 +18,10 @@ function notificationCenter(msg, status) {
     (status !== 'success') ? notyf.alert(msg) : notyf.confirm(msg);
 }
 
+function redirect(url) {
+    history.pushState(null, null, baseUrl+"/"+url);
+    app(url,null);
+}
 function timeConverter(t) {
     var a = new Date(t * 1000);
     var today = new Date();
@@ -41,7 +47,7 @@ function getFeed(method, last_id, selector, user_id) {
     apiRequest(method, {'last_id': last_id, 'user_id': user_id}, function (response) {
         console.log(response);
         if (response.hasOwnProperty("response")) {
-            if (response.response.tasks.length == 0 || window.last_id_feed == 1) window.lock = true;
+            if (response.response.tasks.length == 0 || window.list_last_id == 1) window.lock = true;
             for (i = 0; i < response.response.tasks.length; i++) {
                 var html = "";
                 task = response.response.tasks[i];
@@ -69,9 +75,9 @@ function getFeed(method, last_id, selector, user_id) {
                 });
                 $("#"+selector).append(html);
                 window.lock = false;
-                window.last_id_feed = task.id;
+                window.list_last_id = task.id;
             }
-            if (window.last_id_feed == 0) $("#"+selector).append("<p class='empty_list'>Список пуст</p>");
+            if (window.list_last_id == 0) $("#"+selector).append("<p class='empty_list'>Список пуст</p>");
         } else {
             notificationCenter("Что-то пошло совсем не так :(", 'error')
         }
@@ -80,4 +86,8 @@ function getFeed(method, last_id, selector, user_id) {
 
 function padDigits(number, digits) {
     return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+}
+
+function balanceUpdater(sum) {
+    $("#balanceSum").text(parseInt($("#balanceSum").text())+sum);
 }

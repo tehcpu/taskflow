@@ -1,6 +1,8 @@
 (function($,window){
 
     var pageHandlers = {};
+    var pageTitles = {"feed": "Задачи", "feedmy": "Мои задачи", "auth": "Авторизация", "register": "Регистрация",
+        "task": "Задача", "profile": "Профиль", "new_task": "Новая задача", "settings": "Настройки", "transactions": "Транзакции"};
 
     var currentPageName = null;
     var $currentPage = null;
@@ -38,7 +40,6 @@
 
     function app(pageName,param) {
         var $page = $(document.body).find("section#" + pageName);
-        console.log(pageName+" "+param)
         var src = $page.attr("src");
         if ( src && $page.find(">:first-child").length == 0) {
             app.get(src, $page, pageName)
@@ -53,6 +54,8 @@
     app.get = function(src,$page,pageName) { return $.get(src, "html"); };
 
     function router() {
+        invalidateContext();
+        setTitle();
         var url = location.pathname.split('/');
         var pageName = url[1];
         var param = url[2];
@@ -72,6 +75,28 @@
         setTimeout(function () {
             lock = false;
         }, 100)
+    };
+
+    function invalidateContext() {
+        // menu highligther
+        $(".top_main_menu a").removeClass("active");
+        $(".top_main_menu a[href='"+location.pathname+"']").addClass("active");
+
+        // null vars
+        $(window).unbind('scroll');
+        window.list_last_id = 0;
+
+        // clean lists
+        $(".content_list").html("");
+
+        // profile special fix
+        $(".profile_sidebar").remove();
+    }
+
+    function setTitle() {
+        titleKey = location.pathname.replace(/[0-9]/g, '');
+        titleKey = titleKey.replace(/\//g, "")
+        document.title = "Task Flow | "+pageTitles[titleKey];
     }
 
     window.app = app;
