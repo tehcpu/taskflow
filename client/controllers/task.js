@@ -1,5 +1,6 @@
 app.page("task", function() {
     $(".top_main_menu a").removeClass("active");
+    $("#closeTask").unbind("click");
     window.last_id_feed = 0;
     $(window).unbind('scroll');
     user_id = parseInt(window.location.pathname.split("/").pop());
@@ -21,7 +22,6 @@ console.log(response.response.role)
 
     function reserve() {
         apiRequest("tasks.close", {'task_id': parseInt(window.location.pathname.split("/").pop())}, function (response) {
-            alert()
             if (response.hasOwnProperty("error")) {
                 if (response.error.error_code == 1338) notificationCenter("Вы не успели (как и я), кто-то уже забрал эту задачу");
                 setTimeout(function () {

@@ -73,6 +73,6 @@ function closeTask($id, $user_id) {
 }
 
 function openTask($owner_id, $title, $body, $budget) {
-	query("INSERT INTO tasks (owner_id, title, body, budget, created_at) VALUES (?, ?, ?, ?, ?)", "iiiii", array($owner_id, $title, $body, $budget, time()), "tasks_write");
+	query("INSERT INTO tasks (owner_id, title, body, budget, created_at) VALUES (?, ?, ?, ?, ?)", "issii", array($owner_id, $title, $body, $budget, time()), "tasks_write");
 	return true;
 }

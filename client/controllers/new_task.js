@@ -1,4 +1,5 @@
 app.page("new_task", function() {
+    $("#startTask").unbind("click");
     $(".top_main_menu a").removeClass("active");
     $(".top_main_menu a[href='/new_task']").addClass("active");
 
@@ -8,7 +9,6 @@ app.page("new_task", function() {
         budget = $("#newTaskBudget").val();
         if (body.length > 0 && title.length > 0 && budget > 0) {
             apiRequest("tasks.open", {'body': body, "budget": budget, "title": title}, function (response) {
-alert()
                 console.log(response)
                 $("#startTask").show();
                 if (response.hasOwnProperty("error")) {

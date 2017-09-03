@@ -33,6 +33,11 @@ error_reporting(E_ALL);
             <div class="right">
                 <div class="user_panel">
                     <div class="dropdown user_menu">
+                        <div class="balance-wrapper">
+                            <a href="/transactions">
+                                <span id="userBalance" class="balance">Баланс: <?=$user['balance']?> &#x20bd;</span>
+                            </a>
+                        </div>
                         <a id="userLink" href="/profile/<?=$user['id']?>">
                         <span class="toggler">
                             <span id="userAvatar" class="avatar" style="background-image: url('http://www.gravatar.com/avatar/<?=$user['id']?>?d=identicon')"></span>

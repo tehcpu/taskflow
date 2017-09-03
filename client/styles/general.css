@@ -11117,11 +11117,11 @@ table.transactions tr td.price {
     margin-bottom: 20px;
 }
 
-#userLink {
+#userLink, #userBalance {
     color: #999999;
 }
 
-#userLink:hover {
+#userLink:hover, #userBalance:hover {
     color: black;
 }
 
@@ -11131,4 +11131,17 @@ table.transactions tr td.price {
     padding-top: 20px;
     padding-bottom: 10px;
     color: #999999;
+}
+
+.header .inner .right .user_panel .dropdown.user_menu .balance {
+    float: right;
+}
+
+.header .inner .right .user_panel .dropdown.user_menu .balance-wrapper {
+    display: block;
+    position: absolute;
+    left: -260px;
+    overflow: hidden;
+    width: 200px;
+    background-size: cover;
 }
