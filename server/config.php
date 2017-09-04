@@ -83,5 +83,8 @@ $_ERRORS = array(
 	120 => "Logout failure",
 	121 => "Task addition failure",
 	122 => "You have not enough money for this operation",
+	123 => "Wrong old password",
+	124 => "This email is already in use",
+	125 => "This phone is already in use",
 	1338 => "Task has already closed"
 );

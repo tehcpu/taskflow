@@ -24,3 +24,8 @@ function getProfile($data) {
 	$user = getByID($data["id"], false);
 	responseThrower(array("user" => $user));
 }
+
+function logoutUser() {
+	logout();
+	responseThrower(array("success" => true));
+}

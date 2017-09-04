@@ -11,6 +11,11 @@ require_once('../server/models/users.php');
 require_once('../server/models/tasks.php');
 require_once('../server/models/transactions.php');
 
+// // // // // // // // // // // //
+// Commission amount size (in %) //
+// // // // // // // // // // // //
+$_AMOUNT = 10;
+
 function _middleware() {
 	if (!isset($_COOKIE["s"]) || !validateSession($_COOKIE["s"])) errorThrower(119);
 }
@@ -29,12 +34,12 @@ function getTaskByID($data) {
 }
 
 function executeTask($data) {
-	global $_USER;
+	global $_USER, $_AMOUNT;
 	$task = getTask($data["task_id"])[0];
 	if ($task["closed_at"] > 0) errorThrower(1338);
 	closeTask($data["task_id"], $_USER["id"]);
-	changeBalance($_USER["id"], $task["budget"]*0.9);
-	addTransaction($task["owner_id"], $_USER["id"], $task["id"], $task["budget"]);
+	changeBalance($_USER["id"], $task["budget"]*(1 - $_AMOUNT/100));
+	addTransaction($task["owner_id"], $_USER["id"], $task["id"], $task["budget"]*(1 - $_AMOUNT/100));
 	responseThrower(array("success" => true));
 }
 

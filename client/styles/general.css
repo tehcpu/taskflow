@@ -11149,3 +11149,41 @@ table.transactions tr td.price {
 .section .body {
     text-align: left;
 }
+
+.devider {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+    background: #ededed;
+}
+
+.commit_section, #logoutBtn {
+    margin: 20px auto;
+    width: 200px;
+    display: block;
+    cursor: pointer;
+    user-select: none;
+}
+
+.transaction_description {
+    position: absolute;
+    top: -10px;
+    left: 100px;
+    margin-top: 40px;
+    color: #999999;
+}
+
+.transaction_price {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    color: red;
+}
+
+.spend {
+    color: red;
+}
+
+.obtain {
+    color: #0d8927;
+}

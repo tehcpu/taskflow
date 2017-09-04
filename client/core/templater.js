@@ -63,10 +63,12 @@
     }
 
     $('body').on('click', 'a', function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        history.pushState('data to be passed', 'Title of the page', $(this).attr("href"));
-        router()
+        if (!$(this).hasClass("pseudo")) {
+            event.preventDefault();
+            event.stopPropagation();
+            history.pushState('data to be passed', 'Title of the page', $(this).attr("href"));
+            router()
+        }
     });
 
     window.onpopstate = function() {

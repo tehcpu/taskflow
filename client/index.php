@@ -51,7 +51,7 @@ error_reporting(E_ALL);
             <div class="top_main_menu">
                 <a href="/feed">Задачи</a>
                 <a href="/feed/my">Мои задачи</a>
-                <!--a href="/settings">Настройки</a-->
+                <a href="/settings">Настройки</a>
                 <?php if ($user["role"] == 0) { ?><a href="/new_task">Создать задачу</a><?php } ?>
             </div>
         </div>
@@ -67,5 +67,6 @@ error_reporting(E_ALL);
     <script src="/core/templater.js"></script>
     <script src="/core/utils.js"></script>
     <script src="/core/notify.js"></script>
+    <script>window.uid = <?=$user["id"]?>;</script>
 </body>
 </html>

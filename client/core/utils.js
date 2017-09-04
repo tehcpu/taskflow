@@ -84,10 +84,48 @@ function getFeed(method, last_id, selector, user_id) {
     })
 }
 
+function getTransactions(method, last_id, selector) {
+    window.lock = true;
+    apiRequest(method, {'last_id': last_id}, function (response) {
+        console.log(response);
+        if (response.hasOwnProperty("response")) {
+            if (response.response.transactions.length == 0 || window.list_last_id == 1) window.lock = true;
+            for (i = 0; i < response.response.transactions.length; i++) {
+                transaction = response.response.transactions[i];
+                type = (transaction.to_id == 0) ? 'spend' : 'obtain';
+                msg = (transaction.to_id == 0) ? 'Списание средств за публикацию заказа ' : 'Получение средств за выполнение заказа ';
+                sum = (transaction.to_id == 0) ? "-"+transaction.sum : transaction.sum;
+                html = '<div class="job" id="transaction_'+transaction.id+'">' +
+                        '<div class="inner transactions_inner">' +
+                        '<span class="date">'+timeConverter(transaction.created_at)+'</span>' +
+                        '<span class="transaction_description">'+msg+' <a href="/task/'+transaction.task_id+'">#'+transaction.task_id+'</a></span>' +
+                        '<span class="transaction_price '+type+'">'+sum+' &#x20bd;</span>' +
+                        '</div>' +
+                        '</div>';
+                if (transaction.to_id != 0 && transaction.from_id == window.uid) html = ''; // don't show fake-positive for owner list
+                $("#"+selector).append(html);
+                window.lock = false;
+                window.list_last_id = transaction.id;
+            }
+            if (window.list_last_id == 0) $("#"+selector).append("<p class='empty_list'>Список пуст</p>");
+        } else {
+            notificationCenter("Что-то пошло совсем не так :(", 'error')
+        }
+    })
+}
+
 function padDigits(number, digits) {
     return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
 }
 
 function balanceUpdater(sum) {
     $("#balanceSum").text(parseInt($("#balanceSum").text())+sum);
+}
+
+function lettersOnly() {
+    var charCode = event.keyCode;
+    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode >= 1040 && charCode <= 1103) || charCode == 8)
+        return true;
+    else
+        return false;
 }

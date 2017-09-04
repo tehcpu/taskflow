@@ -25,6 +25,52 @@ function logout() {
 
 
 function changeBalance($uid, $sum) {
-	query("UPDATE users SET balance = balance + ? WHERE id=?", "ii", array($sum, $uid), "users_write");
+	query("UPDATE users SET balance = balance + ? WHERE id = ?", "ii", array($sum, $uid), "users_write");
 	return true;
+}
+
+function changeLogin($login) {
+	global $_USER;
+	$user = fetch(query("SELECT `id` FROM users WHERE login = ?", "s", array($login), "users_read"));
+	if (count($user) == 0 || $user[0]["id"] == $_USER["id"]) {
+		query("UPDATE users SET login = ? WHERE id = ?", "si", array($login, $_USER["id"]), "users_write");
+		return true;
+	} else
+		return false;
+}
+
+function changePassword($old, $new) {
+	global $_USER;
+	$user = fetch(query("SELECT `password` FROM users WHERE id = ?", "i", array($_USER["id"]), "users_read"));
+	if (password_verify($old, $user[0]["password"])) {
+		query("UPDATE users SET password = ? WHERE id = ?", "si", array(password_hash($new, PASSWORD_BCRYPT, array('cost' => 12)), $_USER["id"]), "users_write");
+		return true;
+	}
+	return false;
+}
+
+function changeName($firstname, $lastname, $middlename) {
+	global $_USER;
+	query("UPDATE users SET firstname = ?, lastname = ?, middlename = ? WHERE id = ?", "si", array($firstname, $lastname, $middlename, $_USER["id"]), "users_write");
+	return true;
+}
+
+function changePhone($phone) {
+	global $_USER;
+	$user = fetch(query("SELECT `id` FROM users WHERE phone = ?", "s", array($phone), "users_read"));
+	if (count($user) == 0 || $user[0]["id"] == $_USER["id"]) {
+		query("UPDATE users SET phone = ? WHERE id = ?", "si", array($phone, $_USER["id"]), "users_write");
+		return true;
+	} else
+		return false;
+}
+
+function changeEmail($email) {
+	global $_USER;
+	$user = fetch(query("SELECT `id` FROM users WHERE email = ?", "s", array($email), "users_read"));
+	if (count($user) == 0 || $user[0]["id"] == $_USER["id"]) {
+		query("UPDATE users SET email = ? WHERE id = ?", "si", array($email, $_USER["id"]), "users_write");
+		return true;
+	} else
+		return false;
 }

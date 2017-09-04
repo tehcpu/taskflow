@@ -4,6 +4,7 @@ app.page("profile", function() {
         if (response.hasOwnProperty("response")) {
             user = response.response.user[0];
             role = (user.role == 0) ? "Заказчик" : 'Исполнитель';
+            phone = user.phone+"";
 
             data ='<div class="profile_sidebar left">' +
                     '<div class="section user_info">' +
@@ -17,10 +18,10 @@ app.page("profile", function() {
                     '<div class="homepage"><b>'+role+'</b></div>' +
                     '<div class="salary">' +
                     '<div class="status userEmail">' +
-                    '<a href="mailto:'+user.email+'">'+user.email+'</a>' +
+                    '<a class="pseudo" href="mailto:'+user.email+'">'+user.email+'</a>' +
                     '</div>' +
                     '<div class="status userPhone"> ' +
-                    '<a href="tel:'+user.phone+'">'+user.phone+'</a>' +
+                    '<a class="pseudo" href="tel:'+user.phone+'">'+phone.replace(/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/, '$1 ($2) $3 $4 $5')+'</a>' +
                     '</div>' +
                     '</div>' +
                     '</div>' +

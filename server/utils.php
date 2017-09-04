@@ -19,13 +19,11 @@ function responseThrower($data) {
 }
 
 function encodePassword($plain) {
-	global $_CONFIG;
-	return md5($_CONFIG["SECURE"]["salt"].$_CONFIG["SECURE"]["salt"].$plain.$_CONFIG["SECURE"]["salt"]);
+	return password_hash($plain, PASSWORD_BCRYPT, array('cost' => 12));
 }
 
 function checkPassword($plain, $hash) {
-	global $_CONFIG;
-	return (md5($_CONFIG["SECURE"]["salt"].$_CONFIG["SECURE"]["salt"].$plain.$_CONFIG["SECURE"]["salt"]) == $hash);
+	return password_verify($plain, $hash);
 }
 
 function cookieSetter($cookie_name, $cookie_value) {
