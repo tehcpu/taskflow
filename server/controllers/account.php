@@ -6,10 +6,9 @@
  * Time: 7:28 PM
  */
 
-
-include_once($_SERVER['DOCUMENT_ROOT'].'/../server/db.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/../server/utils.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/../server/models/sessions.php');
+include_once('../server/db.php');
+include_once('../server/utils.php');
+require_once('../server/models/sessions.php');
 
 function _middleware() {
 	if (isset($_COOKIE["s"]) && validateSession($_COOKIE["s"])) errorThrower(114);

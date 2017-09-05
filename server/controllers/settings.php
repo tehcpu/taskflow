@@ -6,7 +6,6 @@
  * Time: 1:44 AM
  */
 
-
 require_once('../server/models/sessions.php');
 require_once('../server/models/users.php');
 require_once('../server/models/transactions.php');

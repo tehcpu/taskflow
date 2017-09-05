@@ -26,7 +26,7 @@ app.page("task", function() {
                 }, 3000);
             } else {
                 notificationCenter("Задача зарезервирована за Вами, деньги на счет получены", 'success');
-                balanceUpdater(price);
+                balanceUpdater(Math.round(price*0.9));
                 setTimeout(function () {
                     document.location.href = '/feed';
                 }, 3000);

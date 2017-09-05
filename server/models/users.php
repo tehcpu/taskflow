@@ -9,14 +9,28 @@
 function getByID($id, $self) {
 	if (!$id) errorThrower(104);
 	// не светим баланс всяким
-	if ($self) return fetch(query("SELECT `id`, `login`, `firstname`, `middlename`, `lastname`, `email`, `phone`, `balance`, `role`, `bdate`, `registered_at` FROM users WHERE id=?", "i", array($id), "users_read"));
-	return fetch(query("SELECT `id`, `login`, `firstname`, `middlename`, `lastname`, `email`, `phone`, `role`, `bdate`, `registered_at` FROM users WHERE id=?", "i", array($id), "users_read"));
+	if ($self) {
+		$user = json_decode(get('user_'.$id."_self", "users"), true);
+		return ($user) ? $user : fetch(query("SELECT `id`, `login`, `firstname`, `middlename`, `lastname`, `email`, `phone`, `balance`, `role`, `bdate`, `registered_at` FROM users WHERE id=?", "i", array($id), "users_read"));
+	} else {
+		$user = json_decode(get('user_'.$id, "users"), true);
+		return ($user) ? $user : fetch(query("SELECT `id`, `login`, `firstname`, `middlename`, `lastname`, `email`, `phone`, `role`, `bdate`, `registered_at` FROM users WHERE id=?", "i", array($id), "users_read"));
+	}
 }
 
 function getByIDs($ids) {
+	$missingIds = array();
+	$users = array();
+	foreach ($ids as $id) {
+		$user = json_decode(get('user_'.$id, "users"), true);
+		($user) ? array_push($users, $user) : array_push($missingIds, $id);
+	}
+	$ids = $missingIds;
 	$clause = implode(',', array_fill(0, count($ids), '?'));
 	$types = implode('', array_fill(0, count($ids), 'i'));
-	return fetch(query("SELECT `id`, `login`, `firstname`, `middlename`, `lastname`, `email`, `phone`, `role`, `bdate`, `registered_at` FROM users WHERE `id` IN (" . $clause . ")", $types, $ids, "users_read"));
+	$data = fetch(query("SELECT `id`, `login`, `firstname`, `middlename`, `lastname`, `email`, `phone`, `role`, `bdate`, `registered_at` FROM users WHERE `id` IN (" . $clause . ")", $types, $ids, "users_read"));
+	$users = array_merge($users, $data);
+	return $users;
 }
 
 function logout() {
