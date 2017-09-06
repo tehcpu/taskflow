@@ -86,6 +86,8 @@ function getUserTasks($last_id, $user_id) {
 
 function closeTask($id, $user_id) {
 	delete("feed_0", "feed");
+	delete("user_".$id, "users");
+	delete("user_".$id."_self", "users");
 	query("UPDATE tasks SET executor_id=?, closed_at=? WHERE id=?", "iii", array($user_id, time(), $id), "tasks_write");
 	return true;
 }
@@ -93,5 +95,7 @@ function closeTask($id, $user_id) {
 function openTask($owner_id, $title, $body, $budget) {
 	query("INSERT INTO tasks (owner_id, title, body, budget, created_at) VALUES (?, ?, ?, ?, ?)", "issii", array($owner_id, $title, $body, $budget, time()), "tasks_write");
 	delete("feed_0", "feed");
+	delete("user_".$owner_id, "users");
+	delete("user_".$owner_id."_self", "users");
 	return true;
 }

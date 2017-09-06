@@ -60,12 +60,12 @@ function getFeed(method, last_id, selector, user_id) {
                             '<span class="date">' + timeConverter(task.created_at) + '</span>' +
                             '<span class="task_salary">' + task.budget + ' &#x20bd;</span>' +
                             '<div class="info">' +
-                            '<div class="title" title="' + task.title + '">' +
-                            '<a href="/task/' + task.id + '">' + task.title + '</a>' +
+                            '<div class="title" title="' + escapeHTML(task.title) + '">' +
+                            '<a href="/task/' + task.id + '">' + escapeHTML(task.title) + '</a>' +
                             '</div>' +
-                            '<span class="task_description">' + task.body + '</span>' +
+                            '<span class="task_description">' + escapeHTML(task.body) + '</span>' +
                             '<div class="company_name">' +
-                            '<a href="/profile/' + task.owner_id + '">' + v.firstname + ' ' + v.lastname + '</a>' +
+                            '<a href="/profile/' + task.owner_id + '">' + escapeHTML(v.firstname) + ' ' + escapeHTML(v.lastname) + '</a>' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
@@ -128,4 +128,20 @@ function lettersOnly() {
         return true;
     else
         return false;
+}
+
+var ESC_MAP = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+};
+
+function escapeHTML(s, forAttribute) {
+    if (!s) return s;
+    s = s+'';
+    return s.replace(forAttribute ? /[&<>'"]/g : /[&<>]/g, function(c) {
+        return ESC_MAP[c];
+    });
 }

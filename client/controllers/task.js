@@ -6,14 +6,14 @@ app.page("task", function() {
         task = response.response.task[0];
         user = response.response.user[0];
 
-        $("#taskDate").html(timeConverter(task.created_at));
-        $("#taskPrice").html(task.budget);
-        price = task.budget;
-        $("#taskBody").html(task.body);
+        $("#taskDate").text(timeConverter(task.created_at));
+        $("#taskPrice").text(task.budget);
+        price = escapeHTML(task.budget);
+        $("#taskBody").text(task.body);
         $("#taskUserLink").attr("href", "/profile/"+user.id);
         userAvatar = "http://www.gravatar.com/avatar/"+user.id+"?d=identicon";
         $("#taskUserAvatar").css("background-image", "url('"+userAvatar+"')");
-        $("#taskUserName").html(user.firstname);
+        $("#taskUserName").text(user.firstname);
         (response.response.role == 0) ? $("#closeTask").hide() : $("#closeTask").show();
         if (task.closed_at != null) $("#closeTask").hide();
     });
