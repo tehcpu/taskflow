@@ -25,9 +25,9 @@ function getTaskByID($data) {
 	global $_USER;
 	$task = getTask($data["id"]);
 	if (count($task) > 0) {
-		$user = getByID($task[0]["owner_id"], false);
+		$user = getByID($task["owner_id"], false);
 		$me = getByID($_USER["id"], false);
-		responseThrower(array("task" => $task, "user" => $user, "role" => $me[0]["role"]));
+		responseThrower(array("task" => array($task), "user" => array($user), "role" => $me["role"]));
 		return;
 	}
 	errorThrower(120);
@@ -35,7 +35,7 @@ function getTaskByID($data) {
 
 function executeTask($data) {
 	global $_USER, $_AMOUNT;
-	$task = getTask($data["task_id"])[0];
+	$task = getTask($data["task_id"]);
 	if ($task["closed_at"] > 0) errorThrower(1338);
 	closeTask($data["task_id"], $_USER["id"]);
 	changeBalance($_USER["id"], $task["budget"]*(1 - $_AMOUNT/100));
@@ -45,7 +45,7 @@ function executeTask($data) {
 
 function createTask($data) {
 	global $_USER;
-	$user = getByID($_USER["id"], true)[0];
+	$user = getByID($_USER["id"], true);
 
 	if ($user["balance"] < $data["budget"]) errorThrower(121);
 

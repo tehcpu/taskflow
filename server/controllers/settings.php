@@ -18,7 +18,7 @@ _middleware();
 
 function getSettings() {
 	global $_USER;
-	responseThrower(array("user" => getByID($_USER["id"], true)[0]));
+	responseThrower(array("user" => getByID($_USER["id"], true)));
 }
 
 function saveSettings($data) {

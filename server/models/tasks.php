@@ -9,7 +9,13 @@
 include_once('../server/db.php');
 
 function getTask($id) {
-	return fetch(query("SELECT * FROM tasks WHERE id=?", "i", array($id), "tasks_read"));
+	$data = json_decode(get('task_'.$id, "tasks"), true);
+	if (!$data) {
+		$data = fetch(query("SELECT * FROM tasks WHERE id=?", "i", array($id), "tasks_read"));
+		set("task_".$id, json_encode($data[0], JSON_UNESCAPED_UNICODE), "tasks");
+		return $data[0];
+	}
+	return $data;
 }
 
 function getTasks($last_id) {

@@ -20,5 +20,5 @@ function getList($last_id) {
 		$types = "iii";
 		array_unshift($params, $last_id);
 	}
-	return fetch(query("SELECT * FROM transactions WHERE ".$condition." (from_id = ? OR to_id = ?) ORDER BY id DESC LIMIT 20", $types, $params, "transactions_read"));
+	return fetch(query("SELECT * FROM transactions WHERE ".$condition." (from_id = ? OR to_id = ?) ORDER BY id DESC LIMIT 40", $types, $params, "transactions_read"));
 }

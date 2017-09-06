@@ -26,7 +26,7 @@ error_reporting(E_ALL);
     <section id="register" src="/templates/register.tpl"></section>
     <?php } else {
         require_once ('../server/controllers/profile.php');
-        $user = getSelf()[0];
+        $user = getSelf();
     ?>
     <div class="header">
         <div class="inner">

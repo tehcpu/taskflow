@@ -2,6 +2,7 @@ app.page("task", function() {
     user_id = parseInt(window.location.pathname.split("/").pop());
     var price = 0;
     apiRequest("tasks.get", {'id': user_id}, function (response) {
+        console.log(response);
         task = response.response.task[0];
         user = response.response.user[0];
 

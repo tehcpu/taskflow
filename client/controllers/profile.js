@@ -2,6 +2,7 @@ app.page("profile", function() {
     user_id = parseInt(window.location.pathname.split("/").pop());
     apiRequest("profile.get", {'id': user_id}, function (response) {
         if (response.hasOwnProperty("response")) {
+            console.log(response)
             user = response.response.user[0];
             role = (user.role == 0) ? "Заказчик" : 'Исполнитель';
             phone = user.phone+"";
