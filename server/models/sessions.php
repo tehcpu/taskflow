@@ -6,7 +6,8 @@
  * Time: 6:55 PM
  */
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/../server/db.php');
+include_once('../server/db.php');
+include_once('../server/cache.php');
 
 $_USER = null;
 
@@ -29,6 +30,7 @@ function deactivateSession($session) {
 	$deactivated_at = time();
 	$sid = explode(".", $session)[0];
 	query("UPDATE sessions SET deactivated_at=? WHERE id=?", "ii", array($deactivated_at, $sid), "sessions_write");
+	delete('session_'.$sid, "sessions");
 	cookieRemover("s");
 	return true;
 }
@@ -39,7 +41,11 @@ function validateSession($session) {
 	if (count($parts) != 2) errorThrower(115);
 	$id = $parts[0];
 	$hash = $parts[1];
-	$data = fetch(query("SELECT * FROM sessions WHERE id=?", "i", array($id), "sessions_read"));
+	$data = json_decode(get('session_'.$id, "sessions"), true);
+	if (!$data) {
+		$data = fetch(query("SELECT * FROM sessions WHERE id=?", "i", array($id), "sessions_read"));
+		set('session_'.$id, json_encode($data, JSON_UNESCAPED_UNICODE), "sessions");
+	}
 	if (count($data) == 0) errorThrower(116);
 	if ($hash != $data[0]["hash"]) errorThrower(115);
 	if (time() > $data[0]["expired_at"]) errorThrower(117);

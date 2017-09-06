@@ -30,9 +30,9 @@
                 </div>
             </div>
         </div>
-            <div class="registrate_button">
-                <a href="/register">Зарегистрируйте</a> новый аккаунт
-            </div>
+        <div class="registrate_button">
+            <a href="/register">Зарегистрируйте</a> новый аккаунт
         </div>
+    </div>
 </div>
 <script src="/controllers/auth.js"></script>

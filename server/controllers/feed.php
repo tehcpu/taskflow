@@ -6,9 +6,9 @@
  * Time: 12:38 PM
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/../server/models/sessions.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/../server/models/users.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/../server/models/tasks.php');
+require_once('../server/models/sessions.php');
+require_once('../server/models/users.php');
+require_once('../server/models/tasks.php');
 
 function _middleware() {
 	if (!isset($_COOKIE["s"]) || !validateSession($_COOKIE["s"])) errorThrower(119);

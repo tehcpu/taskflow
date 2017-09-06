@@ -45,8 +45,8 @@
                             <div class="field">
                                 <select tabindex="7" class="custom_select" id="new_user_role">
                                     <option value="-1">- выберите роль на сайте -</option>
-                                    <option value="0">Я исполнитель</option>
-                                    <option value="1">Я заказчик</option>
+                                    <option value="1">Я исполнитель</option>
+                                    <option value="0">Я заказчик</option>
                                 </select>
                             </div>
                         </div>

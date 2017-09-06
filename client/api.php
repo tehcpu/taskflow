@@ -36,7 +36,7 @@ switch ($_REQUEST["method"]) {
 		break;
 	case "profile.logout":
 		include('../server/controllers/profile.php');
-		logout();
+		logoutUser();
 		break;
 	case "profile.get":
 		include('../server/controllers/profile.php');
@@ -54,7 +54,17 @@ switch ($_REQUEST["method"]) {
 		include('../server/controllers/task.php');
 		createTask($_REQUEST);
 		break;
+	case "settings.get":
+		include('../server/controllers/settings.php');
+		getSettings();
+		break;
+	case "settings.save":
+		include('../server/controllers/settings.php');
+		saveSettings($_REQUEST);
+		break;
+	case "settings.transactions":
+		include('../server/controllers/settings.php');
+		getTransactions($_REQUEST);
+		break;
     default: errorThrower(101);
 }
-
-?>

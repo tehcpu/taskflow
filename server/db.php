@@ -46,13 +46,6 @@ function fetch($stmt) {
 	return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-function resultHelper($stmt) {
-	mysqli_stmt_execute($stmt);
-	$res = mysqli_stmt_get_result($stmt);
-	if (is_bool($res)) return $res;
-	return mysqli_fetch_all($res, MYSQLI_ASSOC);
-}
-
 function getLastInsertID($scope) {
 	return mysqli_insert_id(getInstance($scope));
 }

@@ -1,14 +1,10 @@
 app.page("new_task", function() {
-    $(".top_main_menu a").removeClass("active");
-    $(".top_main_menu a[href='/new_task']").addClass("active");
-
     function start() {
         body = $("#newTaskBody").val();
         title = $("#newTaskTitle").val();
         budget = $("#newTaskBudget").val();
         if (body.length > 0 && title.length > 0 && budget > 0) {
             apiRequest("tasks.open", {'body': body, "budget": budget, "title": title}, function (response) {
-alert()
                 console.log(response)
                 $("#startTask").show();
                 if (response.hasOwnProperty("error")) {
@@ -24,7 +20,7 @@ alert()
 
     }
 
-    $("#startTask").on('click', function () {
+    $("#startTask").unbind("click").on('click', function () {
         $(this).hide();
         start();
     });

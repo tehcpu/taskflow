@@ -57,7 +57,24 @@ $_CONFIG["DB"] = array(
 	),
 );
 
-$_CONFIG["SECURE"] = array("salt" => "uBz10nw");
+$_CONFIG["CACHE"] = array(
+	"sessions" => array(
+		"host" => "127.0.0.1",
+		"port" => 6379
+	),
+	"tasks" => array(
+		"host" => "127.0.0.1",
+		"port" => 6379
+	),
+	"users" => array(
+		"host" => "127.0.0.1",
+		"port" => 6379
+	),
+	"feed" => array(
+		"host" => "127.0.0.1",
+		"port" => 6379
+	)
+);
 
 $_ERRORS = array(
 	100 => "The API method must be specified",
@@ -83,5 +100,10 @@ $_ERRORS = array(
 	120 => "Logout failure",
 	121 => "Task addition failure",
 	122 => "You have not enough money for this operation",
+	123 => "Wrong old password",
+	124 => "This email is already in use",
+	125 => "This phone is already in use",
+	126 => "Invalid scope. Can't connect to Redis. Possible reason: invalid config.",
+	127 => "Valid scope, but it's still impossible to connect to the Redis. Possible reason: wrong config credentials or host is down.",
 	1338 => "Task has already closed"
 );

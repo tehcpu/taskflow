@@ -26,13 +26,18 @@ error_reporting(E_ALL);
     <section id="register" src="/templates/register.tpl"></section>
     <?php } else {
         require_once ('../server/controllers/profile.php');
-        $user = getSelf()[0];
+        $user = getSelf();
     ?>
     <div class="header">
         <div class="inner">
             <div class="right">
                 <div class="user_panel">
                     <div class="dropdown user_menu">
+                        <div class="balance-wrapper">
+                            <a href="/transactions">
+                                <span id="userBalance" class="balance">Баланс: <span id="balanceSum"><?=$user['balance']?></span> &#x20bd;</span>
+                            </a>
+                        </div>
                         <a id="userLink" href="/profile/<?=$user['id']?>">
                         <span class="toggler">
                             <span id="userAvatar" class="avatar" style="background-image: url('http://www.gravatar.com/avatar/<?=$user['id']?>?d=identicon')"></span>
@@ -46,7 +51,7 @@ error_reporting(E_ALL);
             <div class="top_main_menu">
                 <a href="/feed">Задачи</a>
                 <a href="/feed/my">Мои задачи</a>
-                <!--a href="/settings">Настройки</a-->
+                <a href="/settings">Настройки</a>
                 <?php if ($user["role"] == 0) { ?><a href="/new_task">Создать задачу</a><?php } ?>
             </div>
         </div>
@@ -62,5 +67,6 @@ error_reporting(E_ALL);
     <script src="/core/templater.js"></script>
     <script src="/core/utils.js"></script>
     <script src="/core/notify.js"></script>
+    <script>window.uid = <?php echo (isset($user)) ? $user["id"] : 0?>;</script>
 </body>
 </html>

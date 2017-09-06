@@ -22,5 +22,10 @@ function getSelf() {
 
 function getProfile($data) {
 	$user = getByID($data["id"], false);
-	responseThrower(array("user" => $user));
+	responseThrower(array("user" => array($user)));
+}
+
+function logoutUser() {
+	logout();
+	responseThrower(array("success" => true));
 }

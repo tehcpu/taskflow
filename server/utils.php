@@ -19,21 +19,19 @@ function responseThrower($data) {
 }
 
 function encodePassword($plain) {
-	global $_CONFIG;
-	return md5($_CONFIG["SECURE"]["salt"].$_CONFIG["SECURE"]["salt"].$plain.$_CONFIG["SECURE"]["salt"]);
+	return password_hash($plain, PASSWORD_BCRYPT, array('cost' => 12));
 }
 
 function checkPassword($plain, $hash) {
-	global $_CONFIG;
-	return (md5($_CONFIG["SECURE"]["salt"].$_CONFIG["SECURE"]["salt"].$plain.$_CONFIG["SECURE"]["salt"]) == $hash);
+	return password_verify($plain, $hash);
 }
 
 function cookieSetter($cookie_name, $cookie_value) {
-	setcookie($cookie_name, $cookie_value, time() + (86400 * 31 * 12), "/", "taskflow.net", false, true);
+	setcookie($cookie_name, $cookie_value, time() + (86400 * 31 * 12), "/", ".tehcpu.ru", false, true);
 }
 
 function cookieRemover($cookie_name) {
-	setcookie($cookie_name, null, 1, "/", "taskflow.net", false, true);
+	setcookie($cookie_name, null, 1, "/", ".tehcpu.ru", false, true);
 }
 
 function getClientIP() {

@@ -3,9 +3,8 @@
         <div class="head">
             <div class="title" id="feedTitle">Актвные задачи</div>
         </div>
-        <div class="body" style="text-align: left">
-            <div class="jobs show_marked" id="tasks_list">
-            </div>
+        <div class="body">
+            <div class="jobs show_marked content_list" id="tasks_list"></div>
         </div>
     </div>
 </div>
