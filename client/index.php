@@ -67,6 +67,6 @@ error_reporting(E_ALL);
     <script src="/core/templater.js"></script>
     <script src="/core/utils.js"></script>
     <script src="/core/notify.js"></script>
-    <script>window.uid = <?=$user["id"]?>;</script>
+    <script>window.uid = <?php echo (isset($user)) ? $user["id"] : 0?>;</script>
 </body>
 </html>
